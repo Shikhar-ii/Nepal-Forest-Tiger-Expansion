@@ -3,165 +3,255 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nepal Tiger Recovery and Forest Protection</title>
+    <title>Nepal Tiger Recovery • ESIIL Visual Story</title>
     <meta
       name="description"
-      content="A professional research-style website showing Nepal’s tiger recovery, forest resilience, and geographic habitat patterns."
+      content="A cinematic, 3D-inspired website for Nepal’s tiger recovery story, with animated charts, habitat visuals, and an ESIIL-inspired presentation."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="background-glow background-glow--one"></div>
+    <div class="background-glow background-glow--two"></div>
+
     <div class="page-shell">
       <header class="hero">
+        <div class="hero__particle-layer" aria-hidden="true"></div>
         <div class="hero__content">
-          <p class="eyebrow">Research presentation • Nepal • Conservation analysis</p>
-          <h1>Nepal’s tiger recovery and forest protection</h1>
+          <p class="eyebrow">ESIIL • Data • Ecology • Conservation</p>
+          <h1 class="hero__headline">Nepal’s tiger story is rising fast — and the habitat challenge is just as real.</h1>
           <p class="lead">
-            This page presents a professional summary of the findings: tiger numbers increased
-            strongly, forest cover remained broadly stable, and the main tiger habitat remained
-            concentrated in Nepal’s Terai landscape.
+            This presentation blends research, motion, and immersive visuals to show how tiger recovery
+            has surged while the forest base remains a precious but limited resource. The result is a bold,
+            data-driven story that feels more like a digital conservation showcase than a static report.
           </p>
           <div class="hero__actions">
-            <a class="button" href="#results">View the analysis</a>
-            <a class="button button--ghost" href="#maps">See the maps</a>
+            <a class="button" href="#results">Explore the analysis</a>
+            <a class="button button--ghost" href="#gallery">See the visual gallery</a>
+          </div>
+          <div class="hero__badges">
+            <span class="pill">3D-style experience</span>
+            <span class="pill">Animated time series</span>
+            <span class="pill">ESIIL-inspired visuals</span>
           </div>
         </div>
 
-        <div class="hero__visual">
+        <div class="hero__visual tilt-card">
           <div class="hero-card">
-            <svg class="tiger-art" viewBox="0 0 320 260" role="img" aria-label="Stylized tiger illustration">
-              <rect x="20" y="20" width="280" height="220" rx="24" class="hero-card__frame" />
-              <path d="M112 92c-18 0-34 8-45 22l-10 14 31 8 8-13 13 20 10-8 16 22 21-6-20-31 33-10 9-17-16-11-22 8-12-18-12 7-10-14-15 4z" fill="#111" />
-              <path d="M136 106l14 12 20-10 7 14 16-5-11-22-24-8-22 19z" fill="#fff" />
-              <circle cx="156" cy="128" r="7" fill="#111" />
-              <circle cx="182" cy="128" r="7" fill="#111" />
-              <path d="M164 146c7 3 11 8 14 16" stroke="#111" stroke-width="4" fill="none" stroke-linecap="round" />
-              <path d="M215 84c12 0 24 5 31 13l17 18-19 4-6-9-10 11-12-8 10-19-11-10z" fill="#111" />
-              <path d="M193 144c16 8 24 24 24 42 0 19-11 36-29 44l-10-15c11-5 19-17 19-29 0-8-2-14-7-19l3-23z" fill="#111" />
-            </svg>
-            <p class="hero-card__note">A strong conservation story with measurable recovery.</p>
+            <img
+              class="hero-image"
+              src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80"
+              alt="Forest landscape and conservation environment"
+            />
+            <div class="hero-card__overlay">
+              <p class="hero-card__title">ESIIL-inspired research showcase</p>
+              <p class="hero-card__note">A cinematic view of habitat, data, and conservation momentum.</p>
+            </div>
           </div>
         </div>
       </header>
 
       <main>
         <section class="stats-grid" aria-label="Key findings">
-          <article class="card">
+          <article class="card tilt-card">
             <p class="card__label">Tiger population</p>
             <h3>429</h3>
             <p>Wild tigers recorded in the 2026 census.</p>
           </article>
-          <article class="card">
+          <article class="card tilt-card">
             <p class="card__label">Growth</p>
             <h3>3.5x</h3>
             <p>Increase from the 2009 baseline of 121.</p>
           </article>
-          <article class="card">
+          <article class="card tilt-card">
             <p class="card__label">Forest cover</p>
             <h3>39–45%</h3>
-            <p>Independent assessments show broad stability.</p>
+            <p>Broadly stable, but still highly consequential for habitat quality.</p>
           </article>
-          <article class="card">
-            <p class="card__label">Protection</p>
-            <h3>22,000+</h3>
-            <p>Community Forest User Groups support habitat resilience.</p>
+          <article class="card tilt-card">
+            <p class="card__label">Habitat focus</p>
+            <h3>Terai</h3>
+            <p>Most tigers remain concentrated in the Terai Arc Landscape.</p>
           </article>
         </section>
 
-        <section id="results" class="panel-grid">
-          <article class="card card--wide">
+        <section id="results" class="panel-grid panel-grid--analysis">
+          <article class="card card--wide tilt-card">
             <div class="section-title">
               <p class="eyebrow">Main outcome</p>
               <h2>What the evidence shows</h2>
             </div>
             <p>
-              Nepal’s conservation record is strong and clear. Tiger numbers increased substantially,
-              forest cover remained broadly stable, and the most important tiger habitat remained in
-              the lowland Terai landscape.
+              Nepal’s conservation record is strong and clear. Tigers increased substantially, while forest cover
+              remained broadly stable. Yet the habitat base is still limited enough that corridor protection,
+              restoration, and stewardship remain essential for continued growth.
             </p>
             <ul class="bullet-list">
               <li>Tiger recovery exceeded the international doubling target.</li>
-              <li>Park-level gains were strongest in Chitwan, Parsa, Banke, and Shuklaphanta.</li>
-              <li>Recent forest loss remained small compared with the total forest stock.</li>
+              <li>Chitwan, Parsa, Banke, and Shuklaphanta drove much of the recent increase.</li>
+              <li>Forest stability is encouraging, but the habitat base still needs active management.</li>
             </ul>
           </article>
 
-          <article class="card">
+          <article class="card tilt-card">
             <div class="section-title">
-              <p class="eyebrow">Chart</p>
-              <h2>Tiger trend</h2>
+              <p class="eyebrow">Time series</p>
+              <h2>Growth and habitat pressure</h2>
             </div>
-            <div id="tigerChart" class="chart"></div>
+            <div id="timelineChart" class="chart"></div>
+            <p class="chart-caption">Tiger counts rise sharply while forest cover stays within a narrow band, highlighting the need for connected habitat.</p>
           </article>
 
-          <article class="card">
+          <article class="card tilt-card">
             <div class="section-title">
-              <p class="eyebrow">Chart</p>
-              <h2>Forest condition</h2>
+              <p class="eyebrow">Park comparison</p>
+              <h2>Park-level change</h2>
             </div>
-            <div id="forestChart" class="chart"></div>
+            <div id="parkChart" class="chart"></div>
+            <p class="chart-caption">Parsa and Banke show the strongest gains, while Bardiya dropped after 2022.</p>
+          </article>
+        </section>
+
+        <section id="gallery" class="gallery-grid">
+          <article class="card card--gallery tilt-card">
+            <div class="section-title">
+              <p class="eyebrow">Visual gallery</p>
+              <h2>Layered data storytelling</h2>
+            </div>
+            <div class="gallery-stack">
+              <img class="gallery-image" src="analysis_outputs/figures/tiger_population.svg" alt="Tiger population chart" />
+              <img class="gallery-image" src="analysis_outputs/figures/park_change.svg" alt="Park change chart" />
+              <img class="gallery-image" src="analysis_outputs/figures/habitat_map.svg" alt="Habitat map" />
+            </div>
+          </article>
+
+          <article class="card card--gallery tilt-card">
+            <div class="section-title">
+              <p class="eyebrow">ESIIL feel</p>
+              <h2>Research meets motion</h2>
+            </div>
+            <div class="panel-preview">
+              <div class="panel-preview__block"></div>
+              <div class="panel-preview__block panel-preview__block--accent"></div>
+              <div class="panel-preview__block panel-preview__block--muted"></div>
+            </div>
+            <p class="chart-caption">This version is designed to feel more like a modern conservation portfolio page with depth, rhythm, and a polished scientific aesthetic.</p>
+          </article>
+        </section>
+
+        <section class="panel-grid panel-grid--beforeafter">
+          <article class="card card--map tilt-card">
+            <div class="section-title">
+              <p class="eyebrow">Timeline map view</p>
+              <h2>How tiger habitat expanded across Nepal over time</h2>
+            </div>
+            <div class="timeline-map-grid">
+              <div class="timeline-map-card">
+                <p class="timeline-map-card__label">2009</p>
+                <div class="timeline-map timeline-map--early"></div>
+              </div>
+              <div class="timeline-map-card">
+                <p class="timeline-map-card__label">2013</p>
+                <div class="timeline-map timeline-map--mid"></div>
+              </div>
+              <div class="timeline-map-card">
+                <p class="timeline-map-card__label">2018</p>
+                <div class="timeline-map timeline-map--later"></div>
+              </div>
+              <div class="timeline-map-card">
+                <p class="timeline-map-card__label">2026</p>
+                <div class="timeline-map timeline-map--latest"></div>
+              </div>
+            </div>
+            <p class="chart-caption">The map-style panels show how tiger recovery became more spatially visible and more concentrated in the Terai corridor over time.</p>
+          </article>
+
+          <article class="card tilt-card">
+            <div class="section-title">
+              <p class="eyebrow">Tiger locations</p>
+              <h2>Exact tiger habitat zones in Nepal</h2>
+            </div>
+            <div class="location-map" aria-label="Nepal map with highlighted current tiger habitat zones">
+              <div class="location-map__base"></div>
+              <div class="location-map__fill location-map__fill--west"></div>
+              <div class="location-map__fill location-map__fill--center"></div>
+              <div class="location-map__fill location-map__fill--south"></div>
+              <div class="location-map__pin location-map__pin--chitwan"></div>
+              <div class="location-map__pin location-map__pin--parsa"></div>
+              <div class="location-map__pin location-map__pin--banke"></div>
+              <div class="location-map__pin location-map__pin--bardiya"></div>
+              <div class="location-map__pin location-map__pin--shuklaphanta"></div>
+              <div class="location-map__label location-map__label--chitwan">Chitwan</div>
+              <div class="location-map__label location-map__label--parsa">Parsa</div>
+              <div class="location-map__label location-map__label--banke">Banke</div>
+              <div class="location-map__label location-map__label--bardiya">Bardiya</div>
+              <div class="location-map__label location-map__label--shuklaphanta">Shuklaphanta</div>
+              <div class="location-map__legend">
+                <span class="legend-chip">High tiger presence</span>
+                <span class="legend-chip legend-chip--empty">Filled habitat gaps</span>
+              </div>
+            </div>
           </article>
         </section>
 
         <section id="maps" class="panel-grid panel-grid--map">
-          <article class="card card--map">
+          <article class="card card--map tilt-card">
             <div class="section-title">
               <p class="eyebrow">Geographic analysis</p>
-              <h2>Nepal map</h2>
+              <h2>Habitat corridors and conservation nodes</h2>
             </div>
             <p>
-              Tigers are concentrated in the Terai Arc Landscape, especially in the lowland
-              protected areas and forest corridors that connect them.
+              The Terai Arc Landscape remains the core tiger habitat, linked by forests, rivers, protected
+              areas, and community-managed corridors.
             </p>
             <div class="map-wrap">
-              <svg class="nepal-map" viewBox="0 0 620 520" role="img" aria-label="Full Nepal map with highlighted tiger habitat regions">
-                <rect x="0" y="0" width="620" height="520" fill="#f7f7f7" />
-                <path d="M130 120l46-32 74-12 70 26 60 10 40 42 6 58-22 44-56 22-52 6-54-14-44-40-10-58z" fill="#f0f0f0" stroke="#111" stroke-width="3" />
-                <path d="M175 154l46-20 44 8 16 34-14 28-40 8-32-12-20-24z" fill="#dfe8dd" stroke="#111" stroke-width="2" />
-                <path d="M242 210l54-12 48 12 20 30-20 34-44 12-40-16-20-32z" fill="#e8ede6" stroke="#111" stroke-width="2" />
-                <circle cx="206" cy="168" r="10" fill="#2f6f4f" />
-                <circle cx="260" cy="178" r="10" fill="#3b82f6" />
-                <circle cx="238" cy="246" r="10" fill="#7c3aed" />
-                <circle cx="314" cy="228" r="10" fill="#f59e0b" />
-                <circle cx="356" cy="196" r="10" fill="#dc2626" />
-                <text x="182" y="108" class="map-label map-label--title">Nepal</text>
+              <svg class="nepal-map" viewBox="0 0 620 520" role="img" aria-label="Stylized Nepal map showing protected areas and forest corridors for tiger habitat">
+                <rect x="0" y="0" width="620" height="520" fill="#f6f8f2" />
+                <path d="M120 120l58-40 76-12 72 20 60 10 54 40 12 58-28 48-62 24-48 8-52-14-48-40-10-54z" fill="#f0eede" stroke="#2e3a2f" stroke-width="3" />
+                <path d="M160 170l40-20 42 8 18 32-18 24-36 10-34-12-12-24z" fill="#dfe9d8" stroke="#2e3a2f" stroke-width="2" />
+                <path d="M248 208l56-12 44 12 18 30-20 30-42 12-38-18-16-28z" fill="#e8efe2" stroke="#2e3a2f" stroke-width="2" />
+                <path d="M214 170l48 12 42 24 28 0" stroke="#2f6f4f" stroke-width="5" fill="none" stroke-linecap="round" />
+                <path d="M240 188l30-20 40 6 24 22" stroke="#2f6f4f" stroke-width="5" fill="none" stroke-linecap="round" />
+                <circle cx="210" cy="172" r="10" fill="#2f6f4f" />
+                <circle cx="264" cy="186" r="10" fill="#3b82f6" />
+                <circle cx="240" cy="248" r="10" fill="#7c3aed" />
+                <circle cx="318" cy="228" r="10" fill="#f59e0b" />
+                <circle cx="360" cy="200" r="10" fill="#dc2626" />
+                <text x="188" y="108" class="map-label map-label--title">Nepal</text>
                 <text x="198" y="144" class="map-label">Chitwan</text>
-                <text x="262" y="154" class="map-label">Parsa</text>
+                <text x="260" y="154" class="map-label">Parsa</text>
                 <text x="218" y="266" class="map-label">Banke</text>
                 <text x="306" y="246" class="map-label">Bardiya</text>
-                <text x="352" y="214" class="map-label">Shuklaphanta</text>
-                <text x="112" y="300" class="map-note">Terai Arc Landscape</text>
+                <text x="350" y="214" class="map-label">Shuklaphanta</text>
               </svg>
             </div>
           </article>
 
-          <article class="card">
+          <article class="card tilt-card">
             <div class="section-title">
-              <p class="eyebrow">Global comparison</p>
-              <h2>World vs Nepal</h2>
+              <p class="eyebrow">Interpretation</p>
+              <h2>Forest cover is not enough without connection</h2>
             </div>
-            <p>
-              Many tiger range countries have faced decline. Nepal is a stronger example of
-              recovery because of protected areas, habitat management, and active local support.
-            </p>
-            <div id="comparisonChart" class="comparison-chart"></div>
-            <div class="legend">
-              <div class="legend__item"><span class="legend__swatch legend__swatch--world"></span>World trend</div>
-              <div class="legend__item"><span class="legend__swatch legend__swatch--nepal"></span>Nepal trend</div>
-            </div>
+            <div id="forestGauge" class="chart chart--gauge"></div>
+            <p class="chart-caption">The forest estate appears stable, but the habitat base must remain connected and protected to sustain future tiger growth.</p>
           </article>
         </section>
 
-        <section class="card summary-card">
+        <section class="card summary-card tilt-card">
           <div class="section-title">
             <p class="eyebrow">Conclusion</p>
-            <h2>Why the result matters</h2>
+            <h2>Key findings and final takeaway</h2>
           </div>
           <p>
-            Nepal’s progress shows that strong protection, better habitat management, and local
-            community support can produce measurable conservation gains. The findings are not a
-            guarantee of future success, but they are a strong and encouraging signal for policy
-            and conservation planning.
+            Nepal’s tiger recovery is one of the clearest conservation success stories in Asia. Tiger numbers rose from 121 to 429,
+            while the core habitat remained centered in the Terai landscape, especially in Chitwan, Parsa, Banke, Bardiya,
+            and Shuklaphanta. The strongest evidence suggests that protection, habitat management, and corridor continuity all played
+            a central role in making recovery visible across the country.
+          </p>
+          <p>
+            The most important lesson is that tiger expansion is not only about a rising population count. It also depends on filling habitat gaps,
+            protecting connected forests, and keeping the landscape resilient enough for future growth. In short, Nepal has made real progress,
+            but the next frontier is to make the habitat base stronger, wider, and more connected.
           </p>
         </section>
       </main>

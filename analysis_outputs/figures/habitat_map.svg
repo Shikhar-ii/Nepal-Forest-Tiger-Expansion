@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420">
+<rect x="0" y="0" width="100%" height="100%" fill="#f6f8f2"/>
+<text x="360.0" y="28" text-anchor="middle" font-size="20" font-family="Arial" fill="#111">Terai habitat map</text>
+<path d="M120 140l56-44 70-10 68 16 54 8 40 34 8 46-20 46-54 22-44 8-48-12-40-36-10-42z" fill="#efe8d8" stroke="#2e3a2f" stroke-width="3"/>
+<path d="M156 184l42-20 38 8 18 28-16 24-38 10-28-14-16-26z" fill="#dfe9d8" stroke="#2e3a2f" stroke-width="2"/>
+<path d="M240 212l56-10 44 10 16 24-18 24-36 8-34-12-14-24z" fill="#e7efe2" stroke="#2e3a2f" stroke-width="2"/>
+<path d="M180 120c18-16 28-40 40-54" stroke="#5b8dc0" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path d="M118 252c26 10 48 14 84 8" stroke="#5b8dc0" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path d="M214 176l48 10 36 20 24 0" stroke="#2f6f4f" stroke-width="5" fill="none" stroke-linecap="round"/>
+<circle cx="212" cy="176" r="10" fill="#2f6f4f"/>
+<circle cx="260" cy="188" r="10" fill="#3b82f6"/>
+<circle cx="238" cy="248" r="10" fill="#7c3aed"/>
+<circle cx="320" cy="224" r="10" fill="#f59e0b"/>
+<circle cx="360" cy="200" r="10" fill="#dc2626"/>
+<text x="196" y="112" font-size="14" font-family="Arial" fill="#111">Nepal</text>
+<text x="132" y="320" font-size="14" font-family="Arial" fill="#111">Terai Arc Landscape • protected areas • corridors</text>
+</svg>

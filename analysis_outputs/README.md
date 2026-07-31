@@ -1,8 +1,8 @@
 Analysis outputs
 ================
 
-This folder contains exported data files and generated SVG figures from the notebook analysis without changing the notebook itself.
+This folder contains exported data files and generated SVG figures for the updated Nepal tiger and forest-cover comparison.
 
-Folders:
+Files:
 - data/: CSV data tables
-- figures/: generated SVG plots
+- figures/: SVG figures for the web page and notebook export

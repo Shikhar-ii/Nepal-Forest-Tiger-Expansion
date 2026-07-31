@@ -1,6 +1,5 @@
 from pathlib import Path
 import csv
-import math
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / 'data'
@@ -28,6 +27,14 @@ forest_rows = [
     {'year': 2021, 'forest_pct': 40.36, 'source': 'National Forest Inventory 2021'},
 ]
 
+park_rows = [
+    {'park': 'Chitwan', 'change': 17},
+    {'park': 'Parsa', 'change': 30},
+    {'park': 'Banke', 'change': 26},
+    {'park': 'Shuklaphanta', 'change': 14},
+    {'park': 'Bardiya', 'change': -13},
+]
+
 
 def write_csv(path, rows, fieldnames):
     with open(path, 'w', newline='') as f:
@@ -36,155 +43,143 @@ def write_csv(path, rows, fieldnames):
         writer.writerows(rows)
 
 
-def svg_line_chart(path, title, x_values, y_values, x_label='Year', y_label='Value', color='#1b7837', dashed=False):
-    width = 720
-    height = 420
-    margin_left = 70
-    margin_right = 30
-    margin_top = 50
-    margin_bottom = 70
+def svg_line_chart(path, title, x_values, y_values, color='#2f6f4f'):
+    width = 760
+    height = 460
+    margin_left = 80
+    margin_right = 90
+    margin_top = 70
+    margin_bottom = 90
 
     x_min = min(x_values)
     x_max = max(x_values)
-    y_min = min(y_values)
-    y_max = max(y_values)
-    if y_max == y_min:
-        y_max = y_min + 1
+    tiger_min = 100
+    tiger_max = 450
+    forest_min = 39
+    forest_max = 45
 
     def scale_x(x):
         return margin_left + (x - x_min) / (x_max - x_min) * (width - margin_left - margin_right)
 
-    def scale_y(y):
-        return height - margin_bottom - (y - y_min) / (y_max - y_min) * (height - margin_top - margin_bottom)
+    def scale_tiger(y):
+        return height - margin_bottom - (y - tiger_min) / (tiger_max - tiger_min) * (height - margin_top - margin_bottom)
+
+    def scale_forest(y):
+        return height - margin_bottom - (y - forest_min) / (forest_max - forest_min) * (height - margin_top - margin_bottom)
+
+    def tick_values(start, end, steps):
+        return [round(start + (end - start) * i / steps, 1) for i in range(steps + 1)]
 
     parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">']
-    parts.append('<rect x="0" y="0" width="100%" height="100%" fill="white"/>')
-    parts.append(f'<text x="{width/2}" y="25" text-anchor="middle" font-size="20" font-family="Arial" fill="#111">{title}</text>')
-    parts.append(f'<line x1="{margin_left}" y1="{height-margin_bottom}" x2="{width-margin_right}" y2="{height-margin_bottom}" stroke="#111" stroke-width="1.2"/>')
-    parts.append(f'<line x1="{margin_left}" y1="{margin_top}" x2="{margin_left}" y2="{height-margin_bottom}" stroke="#111" stroke-width="1.2"/>')
+    parts.append('<rect x="0" y="0" width="100%" height="100%" fill="#f7fbf4"/>')
+    parts.append('<rect x="22" y="22" width="716" height="416" rx="18" fill="#ffffff" stroke="#dfead8" stroke-width="1.5"/>')
+    parts.append(f'<text x="{width/2}" y="44" text-anchor="middle" font-size="20" font-family="Arial" fill="#183d2b" font-weight="700">{title}</text>')
+    parts.append('<text x="80" y="58" font-size="12" font-family="Arial" fill="#4b5563">Tiger recovery outpaced the forest base, underscoring the need for habitat connectivity.</text>')
 
-    for tick in range(0, 6):
-        y = y_min + (y_max - y_min) * tick / 5
-        ry = scale_y(y)
-        parts.append(f'<line x1="{margin_left}" y1="{ry}" x2="{width-margin_right}" y2="{ry}" stroke="#e5e5e5" stroke-width="1"/>')
-        parts.append(f'<text x="{margin_left-10}" y="{ry+4}" text-anchor="end" font-size="12" font-family="Arial" fill="#555">{int(round(y))}</text>')
+    for y in tick_values(100, 450, 7):
+        ry = scale_tiger(y)
+        parts.append(f'<line x1="{margin_left}" y1="{ry}" x2="{width-margin_right}" y2="{ry}" stroke="#e8efe3" stroke-width="1"/>')
+        parts.append(f'<text x="{margin_left-12}" y="{ry+4}" text-anchor="end" font-size="12" font-family="Arial" fill="#4b5563">{int(y)}</text>')
 
-    points = []
+    for y in tick_values(39, 45, 6):
+        ry = scale_forest(y)
+        parts.append(f'<line x1="{margin_left}" y1="{ry}" x2="{width-margin_right}" y2="{ry}" stroke="#eef4ff" stroke-width="1" stroke-dasharray="4 4"/>')
+        parts.append(f'<text x="{width-margin_right+12}" y="{ry+4}" text-anchor="start" font-size="12" font-family="Arial" fill="#4b5563">{y:.1f}</text>')
+
+    parts.append(f'<line x1="{margin_left}" y1="{height-margin_bottom}" x2="{width-margin_right}" y2="{height-margin_bottom}" stroke="#183d2b" stroke-width="1.4"/>')
+    parts.append(f'<line x1="{margin_left}" y1="{margin_top}" x2="{margin_left}" y2="{height-margin_bottom}" stroke="#183d2b" stroke-width="1.4"/>')
+
+    tiger_points = []
     for x, y in zip(x_values, y_values):
         px = scale_x(x)
-        py = scale_y(y)
-        points.append(f'{px},{py}')
-        parts.append(f'<circle cx="{px}" cy="{py}" r="5" fill="{color}"/>')
-        parts.append(f'<text x="{px}" y="{height-margin_bottom+24}" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">{x}</text>')
-        parts.append(f'<text x="{px}" y="{py-12}" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">{y}</text>')
+        py = scale_tiger(y)
+        tiger_points.append((px, py))
+        parts.append(f'<circle cx="{px}" cy="{py}" r="6" fill="#2f6f4f" stroke="#ffffff" stroke-width="2"/>')
+        parts.append(f'<text x="{px}" y="{height-margin_bottom+24}" text-anchor="middle" font-size="12" font-family="Arial" fill="#374151">{x}</text>')
 
-    dash_attr = 'stroke-dasharray="6 4"' if dashed else ''
-    parts.append(f'<polyline points="{" ".join(points)}" fill="none" stroke="{color}" stroke-width="3" {dash_attr}/>' )
-    parts.append(f'<text x="{width/2}" y="{height-20}" text-anchor="middle" font-size="13" font-family="Arial" fill="#555">{x_label}</text>')
-    parts.append(f'<text x="25" y="{height/2}" text-anchor="middle" transform="rotate(-90 25 {height/2})" font-size="13" font-family="Arial" fill="#555">{y_label}</text>')
+    tiger_polyline = " ".join(f"{px},{py}" for px, py in tiger_points)
+    tiger_area = tiger_polyline + f" {scale_x(x_values[-1])},{height-margin_bottom} {scale_x(x_values[0])},{height-margin_bottom}"
+    parts.append(f'<polygon points="{tiger_area}" fill="#2f6f4f" fill-opacity="0.12"/>')
+    parts.append(f'<polyline points="{tiger_polyline}" fill="none" stroke="#2f6f4f" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>')
+
+    forest_points = []
+    for x, y in zip(x_values, [39.6, 39.1, 44.74, 44.0, 40.36]):
+        px = scale_x(x)
+        py = scale_forest(y)
+        forest_points.append((px, py))
+        parts.append(f'<circle cx="{px}" cy="{py}" r="5" fill="#3b82f6" stroke="#ffffff" stroke-width="2"/>')
+
+    forest_polyline = " ".join(f"{px},{py}" for px, py in forest_points)
+    parts.append(f'<polyline points="{forest_polyline}" fill="none" stroke="#3b82f6" stroke-width="2.6" stroke-dasharray="6 4" stroke-linejoin="round" stroke-linecap="round"/>')
+
+    parts.append('<rect x="520" y="96" width="128" height="58" rx="10" fill="#f8fbf7" stroke="#dce8d6"/>')
+    parts.append('<circle cx="540" cy="118" r="5" fill="#2f6f4f"/>')
+    parts.append('<circle cx="540" cy="142" r="5" fill="#3b82f6"/>')
+    parts.append('<text x="552" y="122" font-size="12" font-family="Arial" fill="#374151">Tiger count</text>')
+    parts.append('<text x="552" y="146" font-size="12" font-family="Arial" fill="#374151">Forest cover</text>')
+    parts.append(f'<text x="{width/2}" y="{height-28}" text-anchor="middle" font-size="13" font-family="Arial" fill="#4b5563">Year</text>')
+    parts.append(f'<text x="28" y="{height/2}" text-anchor="middle" transform="rotate(-90 28 {height/2})" font-size="13" font-family="Arial" fill="#4b5563">Count / cover</text>')
     parts.append('</svg>')
     path.write_text('\n'.join(parts), encoding='utf-8')
 
 
-def svg_scatter_plot(path, title, rows, x_key, y_key, label_key, colors):
+def svg_bar_chart(path, title, rows, x_key, y_key, color='#2f6f4f'):
+    width = 760
+    height = 460
+    margin_left = 80
+    margin_right = 40
+    margin_top = 70
+    margin_bottom = 100
+    max_value = max(abs(row[y_key]) for row in rows)
+
+    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">']
+    parts.append('<rect x="0" y="0" width="100%" height="100%" fill="#fcfdf7"/>')
+    parts.append('<rect x="20" y="20" width="720" height="420" rx="18" fill="#ffffff" stroke="#e0ebda" stroke-width="1.5"/>')
+    parts.append(f'<text x="{width/2}" y="46" text-anchor="middle" font-size="20" font-family="Arial" fill="#183d2b" font-weight="700">{title}</text>')
+    parts.append('<text x="80" y="62" font-size="12" font-family="Arial" fill="#4b5563">Positive gains in most parks, with Bardiya as the main exception.</text>')
+    parts.append(f'<line x1="{margin_left}" y1="{height-margin_bottom}" x2="{width-margin_right}" y2="{height-margin_bottom}" stroke="#183d2b" stroke-width="1.4"/>')
+    parts.append(f'<line x1="{margin_left}" y1="{margin_top}" x2="{margin_left}" y2="{height-margin_bottom}" stroke="#183d2b" stroke-width="1.4"/>')
+
+    for tick in range(0, 6):
+        y = margin_top + (height - margin_top - margin_bottom) * tick / 5
+        parts.append(f'<line x1="{margin_left}" y1="{y}" x2="{width-margin_right}" y2="{y}" stroke="#eef3e9" stroke-width="1"/>')
+        parts.append(f'<text x="{margin_left-12}" y="{y+4}" text-anchor="end" font-size="12" font-family="Arial" fill="#4b5563">{int(round(max_value - (max_value * tick / 5)))}</text>')
+
+    for index, row in enumerate(rows):
+        x = margin_left + index * 110 + 26
+        y_base = height - margin_bottom
+        bar_height = abs(row[y_key]) / max_value * 240
+        bar_y = y_base - bar_height if row[y_key] >= 0 else y_base
+        color_fill = color if row[y_key] >= 0 else '#dc2626'
+        parts.append(f'<rect x="{x}" y="{bar_y}" width="70" height="{bar_height}" rx="8" fill="{color_fill}" fill-opacity="0.95"/>')
+        parts.append(f'<line x1="{x+35}" y1="{y_base}" x2="{x+35}" y2="{y_base-8}" stroke="#94a3b8" stroke-width="1"/>')
+        parts.append(f'<text x="{x+35}" y="{y_base+26}" text-anchor="middle" font-size="12" font-family="Arial" fill="#374151">{row[x_key]}</text>')
+        parts.append(f'<text x="{x+35}" y="{bar_y-8}" text-anchor="middle" font-size="12" font-family="Arial" fill="{color_fill}">{row[y_key]}</text>')
+
+    parts.append(f'<line x1="{margin_left}" y1="{height-margin_bottom}" x2="{width-margin_right}" y2="{height-margin_bottom}" stroke="#183d2b" stroke-width="1.4"/>')
+    parts.append('</svg>')
+    path.write_text('\n'.join(parts), encoding='utf-8')
+
+
+def svg_habitat_map(path, title):
     width = 720
     height = 420
-    margin_left = 70
-    margin_right = 30
-    margin_top = 60
-    margin_bottom = 70
-    x_values = [r[x_key] for r in rows]
-    y_values = [r[y_key] for r in rows]
-    x_min = min(x_values)
-    x_max = max(x_values)
-    y_min = min(y_values)
-    y_max = max(y_values)
-
-    def scale_x(x):
-        return margin_left + (x - x_min) / (x_max - x_min) * (width - margin_left - margin_right)
-
-    def scale_y(y):
-        return height - margin_bottom - (y - y_min) / (y_max - y_min) * (height - margin_top - margin_bottom)
-
     parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">']
-    parts.append('<rect x="0" y="0" width="100%" height="100%" fill="white"/>')
-    parts.append(f'<text x="{width/2}" y="25" text-anchor="middle" font-size="20" font-family="Arial" fill="#111">{title}</text>')
-    parts.append(f'<line x1="{margin_left}" y1="{height-margin_bottom}" x2="{width-margin_right}" y2="{height-margin_bottom}" stroke="#111" stroke-width="1.2"/>')
-    parts.append(f'<line x1="{margin_left}" y1="{margin_top}" x2="{margin_left}" y2="{height-margin_bottom}" stroke="#111" stroke-width="1.2"/>')
-
-    for row in rows:
-        x = scale_x(row[x_key])
-        y = scale_y(row[y_key])
-        color = colors[row[label_key]]
-        parts.append(f'<circle cx="{x}" cy="{y}" r="7" fill="{color}" stroke="#111" stroke-width="1.2"/>')
-        parts.append(f'<text x="{x}" y="{y-12}" text-anchor="middle" font-size="11" fill="#333">{row[y_key]:.2f}</text>')
-        parts.append(f'<text x="{x}" y="{height-margin_bottom+24}" text-anchor="middle" font-size="11" fill="#333">{row[x_key]}</text>')
-
-    parts.append('</svg>')
-    path.write_text('\n'.join(parts), encoding='utf-8')
-
-
-def svg_dual_axis_chart(path, title):
-    width = 760
-    height = 420
-    margin_left = 70
-    margin_right = 40
-    margin_top = 60
-    margin_bottom = 70
-
-    years = list(range(2000, 2027))
-    tiger_vals = [
-        109, 126, 121, 198, 235, 355, 429,
-        429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429,
-    ]
-    tiger_vals = tiger_vals[:len(years)]
-    forest_vals = [39.6, 39.1, 44.74, 44.0, 40.36]  # simplified illustrative points
-
-    # Build a simple proxy for the notebook's shared timeline view
-    tiger_series = [109, 126, 121, 198, 235, 355, 429]
-    tiger_interp = []
-    for year in years:
-        if year <= 2000:
-            tiger_interp.append(109)
-        elif year >= 2026:
-            tiger_interp.append(429)
-        else:
-            tiger_interp.append(int(round(109 + (year - 2000) * (429 - 109) / 26)))
-
-    def scale_y(values, ymin, ymax):
-        return lambda y: height - margin_bottom - (y - ymin) / (ymax - ymin) * (height - margin_top - margin_bottom)
-
-    tiger_ymin = min(tiger_interp)
-    tiger_ymax = max(tiger_interp)
-    forest_ymin = 39
-    forest_ymax = 45
-    tiger_scale = scale_y(tiger_interp, tiger_ymin, tiger_ymax)
-    forest_scale = scale_y([forest_ymin, forest_ymax], forest_ymin, forest_ymax)
-
-    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">']
-    parts.append('<rect x="0" y="0" width="100%" height="100%" fill="white"/>')
-    parts.append(f'<text x="{width/2}" y="25" text-anchor="middle" font-size="20" font-family="Arial" fill="#111">{title}</text>')
-    parts.append(f'<line x1="{margin_left}" y1="{height-margin_bottom}" x2="{width-margin_right}" y2="{height-margin_bottom}" stroke="#111" stroke-width="1.2"/>')
-    parts.append(f'<line x1="{margin_left}" y1="{margin_top}" x2="{margin_left}" y2="{height-margin_bottom}" stroke="#111" stroke-width="1.2"/>')
-
-    # Tiger line
-    tiger_points = []
-    for year, value in zip(years, tiger_interp):
-        x = margin_left + (year - years[0]) / (years[-1] - years[0]) * (width - margin_left - margin_right)
-        y = tiger_scale(value)
-        tiger_points.append(f'{x},{y}')
-    parts.append(f'<polyline points="{" ".join(tiger_points)}" fill="none" stroke="#1b7837" stroke-width="3"/>')
-
-    # Forest dashed line (simplified)
-    forest_points = []
-    for year, value in zip(years[::5], [39.6, 39.1, 44.74, 44.0, 40.36]):
-        x = margin_left + (year - years[0]) / (years[-1] - years[0]) * (width - margin_left - margin_right)
-        y = forest_scale(value)
-        forest_points.append(f'{x},{y}')
-    parts.append(f'<polyline points="{" ".join(forest_points)}" fill="none" stroke="#b2182b" stroke-width="2.5" stroke-dasharray="6 4"/>')
-
-    parts.append('<text x="110" y="50" font-size="12" font-family="Arial" fill="#1b7837">Tiger count</text>')
-    parts.append('<text x="620" y="50" font-size="12" font-family="Arial" fill="#b2182b">Forest cover %</text>')
+    parts.append('<rect x="0" y="0" width="100%" height="100%" fill="#f6f8f2"/>')
+    parts.append(f'<text x="{width/2}" y="28" text-anchor="middle" font-size="20" font-family="Arial" fill="#111">{title}</text>')
+    parts.append('<path d="M120 140l56-44 70-10 68 16 54 8 40 34 8 46-20 46-54 22-44 8-48-12-40-36-10-42z" fill="#efe8d8" stroke="#2e3a2f" stroke-width="3"/>')
+    parts.append('<path d="M156 184l42-20 38 8 18 28-16 24-38 10-28-14-16-26z" fill="#dfe9d8" stroke="#2e3a2f" stroke-width="2"/>')
+    parts.append('<path d="M240 212l56-10 44 10 16 24-18 24-36 8-34-12-14-24z" fill="#e7efe2" stroke="#2e3a2f" stroke-width="2"/>')
+    parts.append('<path d="M180 120c18-16 28-40 40-54" stroke="#5b8dc0" stroke-width="5" fill="none" stroke-linecap="round"/>')
+    parts.append('<path d="M118 252c26 10 48 14 84 8" stroke="#5b8dc0" stroke-width="5" fill="none" stroke-linecap="round"/>')
+    parts.append('<path d="M214 176l48 10 36 20 24 0" stroke="#2f6f4f" stroke-width="5" fill="none" stroke-linecap="round"/>')
+    parts.append('<circle cx="212" cy="176" r="10" fill="#2f6f4f"/>')
+    parts.append('<circle cx="260" cy="188" r="10" fill="#3b82f6"/>')
+    parts.append('<circle cx="238" cy="248" r="10" fill="#7c3aed"/>')
+    parts.append('<circle cx="320" cy="224" r="10" fill="#f59e0b"/>')
+    parts.append('<circle cx="360" cy="200" r="10" fill="#dc2626"/>')
+    parts.append('<text x="196" y="112" font-size="14" font-family="Arial" fill="#111">Nepal</text>')
+    parts.append('<text x="132" y="320" font-size="14" font-family="Arial" fill="#111">Terai Arc Landscape • protected areas • corridors</text>')
     parts.append('</svg>')
     path.write_text('\n'.join(parts), encoding='utf-8')
 
@@ -192,22 +187,18 @@ def svg_dual_axis_chart(path, title):
 if __name__ == '__main__':
     write_csv(DATA_DIR / 'tiger_data.csv', tiger_rows, ['year', 'tiger_count', 'method'])
     write_csv(DATA_DIR / 'forest_data.csv', forest_rows, ['year', 'forest_pct', 'source'])
-    svg_line_chart(FIG_DIR / 'tiger_population.svg', "Nepal's Wild Tiger Population, 2000–2026", [2000, 2005, 2009, 2013, 2018, 2022, 2026], [109, 126, 121, 198, 235, 355, 429], x_label='Year', y_label='Tiger count', color='#1b7837')
-    svg_scatter_plot(FIG_DIR / 'forest_cover.svg', 'Nepal Forest Cover Estimates by Source, 1994–2021', forest_rows, 'year', 'forest_pct', 'source', {
-        'NFI (aerial/field)': '#2166ac',
-        'Uddin et al. 2015 (Landsat)': '#2166ac',
-        'DFRS FRA 2010-2014 (RapidEye 5m)': '#b2182b',
-        'Global Forest Watch / UMD (Landsat 30m)': '#1b7837',
-        'National Forest Inventory 2021': '#2166ac',
-    })
-    svg_dual_axis_chart(FIG_DIR / 'tiger_forest_comparison.svg', 'Nepal: Tiger Population vs. Forest Cover, 2000–2026')
+    write_csv(DATA_DIR / 'park_change.csv', park_rows, ['park', 'change'])
+
+    svg_line_chart(FIG_DIR / 'tiger_population.svg', "Nepal tiger population, 2000–2026", [2000, 2005, 2009, 2013, 2018, 2022, 2026], [109, 126, 121, 198, 235, 355, 429])
+    svg_bar_chart(FIG_DIR / 'park_change.svg', 'Park-level tiger change, 2022–2026', park_rows, 'park', 'change')
+    svg_habitat_map(FIG_DIR / 'habitat_map.svg', 'Terai habitat map')
 
     (BASE_DIR / 'README.md').write_text(
         'Analysis outputs\n================\n\n'
-        'This folder contains exported data files and generated SVG figures from the notebook analysis without changing the notebook itself.\n\n'
-        'Folders:\n'
+        'This folder contains exported data files and generated SVG figures for the updated Nepal tiger and forest-cover comparison.\n\n'
+        'Files:\n'
         '- data/: CSV data tables\n'
-        '- figures/: generated SVG plots\n'
+        '- figures/: SVG figures for the web page and notebook export\n'
     )
 
     print('Export completed.')
