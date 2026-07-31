@@ -86,7 +86,7 @@ Full citations are listed in the notebook and paper.
 
 ## Acknowledgments
 
-Developed as part of the **ESIIL (Environmental Data Science Innovation and Inclusion Lab) Summer Research Internship Program**, University of Colorado Boulder, supported by the **U.S. National Science Foundation (NSF)**.
+Developed as part of the **ESIIL**, University of Colorado Boulder, supported by the **U.S. National Science Foundation (NSF)**.
 
 **Author:** Shikhar Pandey
 **Mentor:** Nate Quarderer, ESIIL Education Director
