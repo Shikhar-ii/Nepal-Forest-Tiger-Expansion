@@ -255,9 +255,39 @@ p {
   margin-bottom: 0.2rem;
 }
 
+.chart-image,
+.gallery-image,
+.map-image {
+  width: 100%;
+  border-radius: 20px;
+  display: block;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+}
+
+.chart-caption {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-top: 0.9rem;
+}
+
 .section-title {
   margin-bottom: 1rem;
 }
+
+@media (max-width: 980px) {
+  .hero,
+  .stats-grid,
+  .panel-grid,
+  .gallery-grid,
+  .panel-grid--map {
+    grid-template-columns: 1fr;
+  }
+
+  .card--wide {
+    grid-column: auto;
+  }
+}
+
 
 .chart-image,
 .map-image,
