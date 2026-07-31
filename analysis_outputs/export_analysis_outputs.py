@@ -1,5 +1,12 @@
 from pathlib import Path
 import csv
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
+import geopandas as gpd
+import osmnx as ox
+import contextily as ctx
+from shapely.geometry import Polygon, Point
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / 'data'
@@ -35,6 +42,22 @@ park_rows = [
     {'park': 'Bardiya', 'change': -13},
 ]
 
+park_locations = [
+    {'park': 'Chitwan', 'lat': 27.5345, 'lon': 84.3574},
+    {'park': 'Parsa', 'lat': 27.1365, 'lon': 84.2596},
+    {'park': 'Banke', 'lat': 28.0274, 'lon': 81.7138},
+    {'park': 'Bardiya', 'lat': 28.8265, 'lon': 81.4200},
+    {'park': 'Shuklaphanta', 'lat': 28.6767, 'lon': 80.1231},
+]
+
+TERAI_POLYGON = [
+    (80.0, 26.5),
+    (87.7, 26.5),
+    (87.7, 28.8),
+    (80.0, 28.8),
+    (80.0, 26.5),
+]
+
 
 def write_csv(path, rows, fieldnames):
     with open(path, 'w', newline='') as f:
@@ -43,145 +66,90 @@ def write_csv(path, rows, fieldnames):
         writer.writerows(rows)
 
 
-def svg_line_chart(path, title, x_values, y_values, color='#2f6f4f'):
-    width = 760
-    height = 460
-    margin_left = 80
-    margin_right = 90
-    margin_top = 70
-    margin_bottom = 90
+def save_tiger_forest_timeline():
+    df_tiger = pd.DataFrame(tiger_rows)
+    df_forest = pd.DataFrame(forest_rows)
 
-    x_min = min(x_values)
-    x_max = max(x_values)
-    tiger_min = 100
-    tiger_max = 450
-    forest_min = 39
-    forest_max = 45
+    fig, ax = plt.subplots(figsize=(12, 6))
+    ax.plot(df_tiger['year'], df_tiger['tiger_count'], marker='o', color='#1f7765', linewidth=3, label='Tiger count')
+    ax.set_ylabel('Tiger count', color='#1f7765', fontsize=12)
+    ax.set_ylim(90, 460)
+    ax.set_xlabel('Year', fontsize=12)
+    ax.set_xticks(sorted(set(df_tiger['year'].tolist() + df_forest['year'].tolist())))
+    ax.tick_params(axis='y', colors='#1f7765')
+    ax.spines['left'].set_color('#1f7765')
 
-    def scale_x(x):
-        return margin_left + (x - x_min) / (x_max - x_min) * (width - margin_left - margin_right)
+    ax2 = ax.twinx()
+    ax2.plot(df_forest['year'], df_forest['forest_pct'], marker='o', linestyle='--', color='#1d4ed8', linewidth=2.5, label='Forest cover')
+    ax2.set_ylabel('Forest cover (%)', color='#1d4ed8', fontsize=12)
+    ax2.set_ylim(38, 46)
+    ax2.tick_params(axis='y', colors='#1d4ed8')
+    ax2.spines['right'].set_color('#1d4ed8')
 
-    def scale_tiger(y):
-        return height - margin_bottom - (y - tiger_min) / (tiger_max - tiger_min) * (height - margin_top - margin_bottom)
+    fig.suptitle('Nepal tiger population and forest cover, 2000–2026', fontsize=18, fontweight='700')
+    ax.grid(axis='y', color='#d8e7df', linestyle='-', linewidth=0.9, alpha=0.65)
+    ax2.grid(False)
+    ax.set_facecolor('#fbfcfb')
+    fig.patch.set_facecolor('#fbfcfb')
 
-    def scale_forest(y):
-        return height - margin_bottom - (y - forest_min) / (forest_max - forest_min) * (height - margin_top - margin_bottom)
+    ax.legend(loc='upper left', frameon=False)
+    ax2.legend(loc='upper right', frameon=False)
 
-    def tick_values(start, end, steps):
-        return [round(start + (end - start) * i / steps, 1) for i in range(steps + 1)]
-
-    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">']
-    parts.append('<rect x="0" y="0" width="100%" height="100%" fill="#f7fbf4"/>')
-    parts.append('<rect x="22" y="22" width="716" height="416" rx="18" fill="#ffffff" stroke="#dfead8" stroke-width="1.5"/>')
-    parts.append(f'<text x="{width/2}" y="44" text-anchor="middle" font-size="20" font-family="Arial" fill="#183d2b" font-weight="700">{title}</text>')
-    parts.append('<text x="80" y="58" font-size="12" font-family="Arial" fill="#4b5563">Tiger recovery outpaced the forest base, underscoring the need for habitat connectivity.</text>')
-
-    for y in tick_values(100, 450, 7):
-        ry = scale_tiger(y)
-        parts.append(f'<line x1="{margin_left}" y1="{ry}" x2="{width-margin_right}" y2="{ry}" stroke="#e8efe3" stroke-width="1"/>')
-        parts.append(f'<text x="{margin_left-12}" y="{ry+4}" text-anchor="end" font-size="12" font-family="Arial" fill="#4b5563">{int(y)}</text>')
-
-    for y in tick_values(39, 45, 6):
-        ry = scale_forest(y)
-        parts.append(f'<line x1="{margin_left}" y1="{ry}" x2="{width-margin_right}" y2="{ry}" stroke="#eef4ff" stroke-width="1" stroke-dasharray="4 4"/>')
-        parts.append(f'<text x="{width-margin_right+12}" y="{ry+4}" text-anchor="start" font-size="12" font-family="Arial" fill="#4b5563">{y:.1f}</text>')
-
-    parts.append(f'<line x1="{margin_left}" y1="{height-margin_bottom}" x2="{width-margin_right}" y2="{height-margin_bottom}" stroke="#183d2b" stroke-width="1.4"/>')
-    parts.append(f'<line x1="{margin_left}" y1="{margin_top}" x2="{margin_left}" y2="{height-margin_bottom}" stroke="#183d2b" stroke-width="1.4"/>')
-
-    tiger_points = []
-    for x, y in zip(x_values, y_values):
-        px = scale_x(x)
-        py = scale_tiger(y)
-        tiger_points.append((px, py))
-        parts.append(f'<circle cx="{px}" cy="{py}" r="6" fill="#2f6f4f" stroke="#ffffff" stroke-width="2"/>')
-        parts.append(f'<text x="{px}" y="{height-margin_bottom+24}" text-anchor="middle" font-size="12" font-family="Arial" fill="#374151">{x}</text>')
-
-    tiger_polyline = " ".join(f"{px},{py}" for px, py in tiger_points)
-    tiger_area = tiger_polyline + f" {scale_x(x_values[-1])},{height-margin_bottom} {scale_x(x_values[0])},{height-margin_bottom}"
-    parts.append(f'<polygon points="{tiger_area}" fill="#2f6f4f" fill-opacity="0.12"/>')
-    parts.append(f'<polyline points="{tiger_polyline}" fill="none" stroke="#2f6f4f" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>')
-
-    forest_points = []
-    for x, y in zip(x_values, [39.6, 39.1, 44.74, 44.0, 40.36]):
-        px = scale_x(x)
-        py = scale_forest(y)
-        forest_points.append((px, py))
-        parts.append(f'<circle cx="{px}" cy="{py}" r="5" fill="#3b82f6" stroke="#ffffff" stroke-width="2"/>')
-
-    forest_polyline = " ".join(f"{px},{py}" for px, py in forest_points)
-    parts.append(f'<polyline points="{forest_polyline}" fill="none" stroke="#3b82f6" stroke-width="2.6" stroke-dasharray="6 4" stroke-linejoin="round" stroke-linecap="round"/>')
-
-    parts.append('<rect x="520" y="96" width="128" height="58" rx="10" fill="#f8fbf7" stroke="#dce8d6"/>')
-    parts.append('<circle cx="540" cy="118" r="5" fill="#2f6f4f"/>')
-    parts.append('<circle cx="540" cy="142" r="5" fill="#3b82f6"/>')
-    parts.append('<text x="552" y="122" font-size="12" font-family="Arial" fill="#374151">Tiger count</text>')
-    parts.append('<text x="552" y="146" font-size="12" font-family="Arial" fill="#374151">Forest cover</text>')
-    parts.append(f'<text x="{width/2}" y="{height-28}" text-anchor="middle" font-size="13" font-family="Arial" fill="#4b5563">Year</text>')
-    parts.append(f'<text x="28" y="{height/2}" text-anchor="middle" transform="rotate(-90 28 {height/2})" font-size="13" font-family="Arial" fill="#4b5563">Count / cover</text>')
-    parts.append('</svg>')
-    path.write_text('\n'.join(parts), encoding='utf-8')
+    fig.tight_layout(rect=[0, 0, 1, 0.94])
+    fig.savefig(FIG_DIR / 'tiger_forest_timeline.svg', format='svg', dpi=200)
+    plt.close(fig)
 
 
-def svg_bar_chart(path, title, rows, x_key, y_key, color='#2f6f4f'):
-    width = 760
-    height = 460
-    margin_left = 80
-    margin_right = 40
-    margin_top = 70
-    margin_bottom = 100
-    max_value = max(abs(row[y_key]) for row in rows)
+def save_park_change_chart():
+    df = pd.DataFrame(park_rows)
+    fig, ax = plt.subplots(figsize=(10, 5))
+    colors = ['#1f7765' if x >= 0 else '#dc2626' for x in df['change']]
+    ax.bar(df['park'], df['change'], color=colors, edgecolor='none', width=0.58)
+    ax.axhline(0, color='#111827', linewidth=1.2)
+    ax.set_ylabel('Tiger change', fontsize=12)
+    ax.set_title('Park-level tiger change, 2022–2026', fontsize=18, fontweight='700')
+    ax.set_facecolor('#fbfcfb')
+    ax.grid(axis='y', color='#e6eef0', linestyle='-', linewidth=0.9)
+    ax.set_axisbelow(True)
+    ax.set_xlabel('Protected area', fontsize=12)
+    ax.set_ylim(min(df['change']) - 8, max(df['change']) + 8)
+    for idx, row in df.iterrows():
+        ax.text(idx, row['change'] + (2 if row['change'] >= 0 else -4), f"{row['change']}", ha='center', va='bottom' if row['change'] >= 0 else 'top', color=colors[idx], fontsize=11, fontweight='600')
 
-    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">']
-    parts.append('<rect x="0" y="0" width="100%" height="100%" fill="#fcfdf7"/>')
-    parts.append('<rect x="20" y="20" width="720" height="420" rx="18" fill="#ffffff" stroke="#e0ebda" stroke-width="1.5"/>')
-    parts.append(f'<text x="{width/2}" y="46" text-anchor="middle" font-size="20" font-family="Arial" fill="#183d2b" font-weight="700">{title}</text>')
-    parts.append('<text x="80" y="62" font-size="12" font-family="Arial" fill="#4b5563">Positive gains in most parks, with Bardiya as the main exception.</text>')
-    parts.append(f'<line x1="{margin_left}" y1="{height-margin_bottom}" x2="{width-margin_right}" y2="{height-margin_bottom}" stroke="#183d2b" stroke-width="1.4"/>')
-    parts.append(f'<line x1="{margin_left}" y1="{margin_top}" x2="{margin_left}" y2="{height-margin_bottom}" stroke="#183d2b" stroke-width="1.4"/>')
-
-    for tick in range(0, 6):
-        y = margin_top + (height - margin_top - margin_bottom) * tick / 5
-        parts.append(f'<line x1="{margin_left}" y1="{y}" x2="{width-margin_right}" y2="{y}" stroke="#eef3e9" stroke-width="1"/>')
-        parts.append(f'<text x="{margin_left-12}" y="{y+4}" text-anchor="end" font-size="12" font-family="Arial" fill="#4b5563">{int(round(max_value - (max_value * tick / 5)))}</text>')
-
-    for index, row in enumerate(rows):
-        x = margin_left + index * 110 + 26
-        y_base = height - margin_bottom
-        bar_height = abs(row[y_key]) / max_value * 240
-        bar_y = y_base - bar_height if row[y_key] >= 0 else y_base
-        color_fill = color if row[y_key] >= 0 else '#dc2626'
-        parts.append(f'<rect x="{x}" y="{bar_y}" width="70" height="{bar_height}" rx="8" fill="{color_fill}" fill-opacity="0.95"/>')
-        parts.append(f'<line x1="{x+35}" y1="{y_base}" x2="{x+35}" y2="{y_base-8}" stroke="#94a3b8" stroke-width="1"/>')
-        parts.append(f'<text x="{x+35}" y="{y_base+26}" text-anchor="middle" font-size="12" font-family="Arial" fill="#374151">{row[x_key]}</text>')
-        parts.append(f'<text x="{x+35}" y="{bar_y-8}" text-anchor="middle" font-size="12" font-family="Arial" fill="{color_fill}">{row[y_key]}</text>')
-
-    parts.append(f'<line x1="{margin_left}" y1="{height-margin_bottom}" x2="{width-margin_right}" y2="{height-margin_bottom}" stroke="#183d2b" stroke-width="1.4"/>')
-    parts.append('</svg>')
-    path.write_text('\n'.join(parts), encoding='utf-8')
+    fig.tight_layout()
+    fig.savefig(FIG_DIR / 'park_change.svg', format='svg', dpi=200)
+    plt.close(fig)
 
 
-def svg_habitat_map(path, title):
-    width = 720
-    height = 420
-    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">']
-    parts.append('<rect x="0" y="0" width="100%" height="100%" fill="#f6f8f2"/>')
-    parts.append(f'<text x="{width/2}" y="28" text-anchor="middle" font-size="20" font-family="Arial" fill="#111">{title}</text>')
-    parts.append('<path d="M120 140l56-44 70-10 68 16 54 8 40 34 8 46-20 46-54 22-44 8-48-12-40-36-10-42z" fill="#efe8d8" stroke="#2e3a2f" stroke-width="3"/>')
-    parts.append('<path d="M156 184l42-20 38 8 18 28-16 24-38 10-28-14-16-26z" fill="#dfe9d8" stroke="#2e3a2f" stroke-width="2"/>')
-    parts.append('<path d="M240 212l56-10 44 10 16 24-18 24-36 8-34-12-14-24z" fill="#e7efe2" stroke="#2e3a2f" stroke-width="2"/>')
-    parts.append('<path d="M180 120c18-16 28-40 40-54" stroke="#5b8dc0" stroke-width="5" fill="none" stroke-linecap="round"/>')
-    parts.append('<path d="M118 252c26 10 48 14 84 8" stroke="#5b8dc0" stroke-width="5" fill="none" stroke-linecap="round"/>')
-    parts.append('<path d="M214 176l48 10 36 20 24 0" stroke="#2f6f4f" stroke-width="5" fill="none" stroke-linecap="round"/>')
-    parts.append('<circle cx="212" cy="176" r="10" fill="#2f6f4f"/>')
-    parts.append('<circle cx="260" cy="188" r="10" fill="#3b82f6"/>')
-    parts.append('<circle cx="238" cy="248" r="10" fill="#7c3aed"/>')
-    parts.append('<circle cx="320" cy="224" r="10" fill="#f59e0b"/>')
-    parts.append('<circle cx="360" cy="200" r="10" fill="#dc2626"/>')
-    parts.append('<text x="196" y="112" font-size="14" font-family="Arial" fill="#111">Nepal</text>')
-    parts.append('<text x="132" y="320" font-size="14" font-family="Arial" fill="#111">Terai Arc Landscape • protected areas • corridors</text>')
-    parts.append('</svg>')
-    path.write_text('\n'.join(parts), encoding='utf-8')
+def save_habitat_map():
+    nepal = ox.geocode_to_gdf('Nepal')
+    nepal = nepal.to_crs(epsg=3857)
+    terai = Polygon(TERAI_POLYGON)
+    terai_gdf = gpd.GeoDataFrame({'name': ['Terai Arc Landscape']}, geometry=[terai], crs='EPSG:4326').to_crs(epsg=3857)
+    parks = gpd.GeoDataFrame(park_locations, geometry=[Point(r['lon'], r['lat']) for r in park_locations], crs='EPSG:4326').to_crs(epsg=3857)
+
+    fig, ax = plt.subplots(figsize=(12, 10))
+    nepal.plot(ax=ax, color='#f6f2e8', edgecolor='#525252', linewidth=1.4)
+    terai_gdf.plot(ax=ax, color='#60a5fa', alpha=0.24, edgecolor='#2563eb', linewidth=2)
+    parks.plot(ax=ax, color='#dc2626', edgecolor='#ffffff', linewidth=1.4, markersize=150)
+
+    for _, row in parks.iterrows():
+        ax.text(row.geometry.x + 15000, row.geometry.y + 12000, row['park'], fontsize=11, fontweight='600', color='#111827', bbox=dict(facecolor='white', edgecolor='none', alpha=0.72, boxstyle='round,pad=0.2'))
+
+    ax.set_axis_off()
+    bounds = terai_gdf.total_bounds
+    margin = 150000
+    ax.set_xlim(bounds[0] - margin, bounds[2] + margin)
+    ax.set_ylim(bounds[1] - margin, bounds[3] + margin)
+    ctx.add_basemap(ax, source=ctx.providers.OpenStreetMap.Mapnik, crs=nepal.crs)
+
+    ax.set_title('OpenStreetMap-based Terai habitat and tiger park overview', fontsize=18, fontweight='700', pad=18)
+    fig.patch.set_facecolor('#fbfcfb')
+
+    fig.tight_layout()
+    fig.savefig(FIG_DIR / 'habitat_map.png', dpi=200, bbox_inches='tight', pad_inches=0.08)
+    fig.savefig(FIG_DIR / 'habitat_map.svg', format='svg', dpi=200, bbox_inches='tight', pad_inches=0.08)
+    plt.close(fig)
 
 
 if __name__ == '__main__':
@@ -189,19 +157,20 @@ if __name__ == '__main__':
     write_csv(DATA_DIR / 'forest_data.csv', forest_rows, ['year', 'forest_pct', 'source'])
     write_csv(DATA_DIR / 'park_change.csv', park_rows, ['park', 'change'])
 
-    svg_line_chart(FIG_DIR / 'tiger_population.svg', "Nepal tiger population, 2000–2026", [2000, 2005, 2009, 2013, 2018, 2022, 2026], [109, 126, 121, 198, 235, 355, 429])
-    svg_bar_chart(FIG_DIR / 'park_change.svg', 'Park-level tiger change, 2022–2026', park_rows, 'park', 'change')
-    svg_habitat_map(FIG_DIR / 'habitat_map.svg', 'Terai habitat map')
+    save_tiger_forest_timeline()
+    save_park_change_chart()
+    save_habitat_map()
 
     (BASE_DIR / 'README.md').write_text(
         'Analysis outputs\n================\n\n'
-        'This folder contains exported data files and generated SVG figures for the updated Nepal tiger and forest-cover comparison.\n\n'
+        'This folder contains exported data files and generated figures for the updated Nepal tiger and forest cover project.\n\n'
         'Files:\n'
         '- data/: CSV data tables\n'
-        '- figures/: SVG figures for the web page and notebook export\n'
+        '- figures/: charts and OpenStreetMap-based habitat visuals generated by Python\n',
+        encoding='utf-8'
     )
 
     print('Export completed.')
     print('Files created:')
-    for path in sorted([p for p in BASE_DIR.rglob('*') if p.is_file()]):
-        print(path.relative_to(BASE_DIR))
+    for path in sorted([p for p in FIG_DIR.rglob('*') if p.is_file()]):
+        print(path.name)
