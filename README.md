@@ -99,6 +99,6 @@ License to be determined by the repository maintainer (e.g., MIT for code, CC-BY
 
 ## Acknowledgments
 
-This project was developed as part of the **Environmental Data Science Innovation and Inclusion Lab (ESIIL)** Summer Program, supported by the **U.S. National Science Foundation (NSF)**.
+This project was developed as part of the **The Environmental Data Science Innovation & Impact Lab  (ESIIL)** Summer Program, supported by the **U.S. National Science Foundation (NSF)**.
 
 **ESIIL and NSF Project**
