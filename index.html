@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nepal Tiger Recovery and Forest Protection</title>
+    <meta
+      name="description"
+      content="A professional research-style website showing Nepal’s tiger recovery, forest resilience, and geographic habitat patterns."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero__content">
+          <p class="eyebrow">Research presentation • Nepal • Conservation analysis</p>
+          <h1>Nepal’s tiger recovery and forest protection</h1>
+          <p class="lead">
+            This page presents a professional summary of the findings: tiger numbers increased
+            strongly, forest cover remained broadly stable, and the main tiger habitat remained
+            concentrated in Nepal’s Terai landscape.
+          </p>
+          <div class="hero__actions">
+            <a class="button" href="#results">View the analysis</a>
+            <a class="button button--ghost" href="#maps">See the maps</a>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <div class="hero-card">
+            <svg class="tiger-art" viewBox="0 0 320 260" role="img" aria-label="Stylized tiger illustration">
+              <rect x="20" y="20" width="280" height="220" rx="24" class="hero-card__frame" />
+              <path d="M112 92c-18 0-34 8-45 22l-10 14 31 8 8-13 13 20 10-8 16 22 21-6-20-31 33-10 9-17-16-11-22 8-12-18-12 7-10-14-15 4z" fill="#111" />
+              <path d="M136 106l14 12 20-10 7 14 16-5-11-22-24-8-22 19z" fill="#fff" />
+              <circle cx="156" cy="128" r="7" fill="#111" />
+              <circle cx="182" cy="128" r="7" fill="#111" />
+              <path d="M164 146c7 3 11 8 14 16" stroke="#111" stroke-width="4" fill="none" stroke-linecap="round" />
+              <path d="M215 84c12 0 24 5 31 13l17 18-19 4-6-9-10 11-12-8 10-19-11-10z" fill="#111" />
+              <path d="M193 144c16 8 24 24 24 42 0 19-11 36-29 44l-10-15c11-5 19-17 19-29 0-8-2-14-7-19l3-23z" fill="#111" />
+            </svg>
+            <p class="hero-card__note">A strong conservation story with measurable recovery.</p>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="stats-grid" aria-label="Key findings">
+          <article class="card">
+            <p class="card__label">Tiger population</p>
+            <h3>429</h3>
+            <p>Wild tigers recorded in the 2026 census.</p>
+          </article>
+          <article class="card">
+            <p class="card__label">Growth</p>
+            <h3>3.5x</h3>
+            <p>Increase from the 2009 baseline of 121.</p>
+          </article>
+          <article class="card">
+            <p class="card__label">Forest cover</p>
+            <h3>39–45%</h3>
+            <p>Independent assessments show broad stability.</p>
+          </article>
+          <article class="card">
+            <p class="card__label">Protection</p>
+            <h3>22,000+</h3>
+            <p>Community Forest User Groups support habitat resilience.</p>
+          </article>
+        </section>
+
+        <section id="results" class="panel-grid">
+          <article class="card card--wide">
+            <div class="section-title">
+              <p class="eyebrow">Main outcome</p>
+              <h2>What the evidence shows</h2>
+            </div>
+            <p>
+              Nepal’s conservation record is strong and clear. Tiger numbers increased substantially,
+              forest cover remained broadly stable, and the most important tiger habitat remained in
+              the lowland Terai landscape.
+            </p>
+            <ul class="bullet-list">
+              <li>Tiger recovery exceeded the international doubling target.</li>
+              <li>Park-level gains were strongest in Chitwan, Parsa, Banke, and Shuklaphanta.</li>
+              <li>Recent forest loss remained small compared with the total forest stock.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="section-title">
+              <p class="eyebrow">Chart</p>
+              <h2>Tiger trend</h2>
+            </div>
+            <div id="tigerChart" class="chart"></div>
+          </article>
+
+          <article class="card">
+            <div class="section-title">
+              <p class="eyebrow">Chart</p>
+              <h2>Forest condition</h2>
+            </div>
+            <div id="forestChart" class="chart"></div>
+          </article>
+        </section>
+
+        <section id="maps" class="panel-grid panel-grid--map">
+          <article class="card card--map">
+            <div class="section-title">
+              <p class="eyebrow">Geographic analysis</p>
+              <h2>Nepal map</h2>
+            </div>
+            <p>
+              Tigers are concentrated in the Terai Arc Landscape, especially in the lowland
+              protected areas and forest corridors that connect them.
+            </p>
+            <div class="map-wrap">
+              <svg class="nepal-map" viewBox="0 0 620 520" role="img" aria-label="Full Nepal map with highlighted tiger habitat regions">
+                <rect x="0" y="0" width="620" height="520" fill="#f7f7f7" />
+                <path d="M130 120l46-32 74-12 70 26 60 10 40 42 6 58-22 44-56 22-52 6-54-14-44-40-10-58z" fill="#f0f0f0" stroke="#111" stroke-width="3" />
+                <path d="M175 154l46-20 44 8 16 34-14 28-40 8-32-12-20-24z" fill="#dfe8dd" stroke="#111" stroke-width="2" />
+                <path d="M242 210l54-12 48 12 20 30-20 34-44 12-40-16-20-32z" fill="#e8ede6" stroke="#111" stroke-width="2" />
+                <circle cx="206" cy="168" r="10" fill="#2f6f4f" />
+                <circle cx="260" cy="178" r="10" fill="#3b82f6" />
+                <circle cx="238" cy="246" r="10" fill="#7c3aed" />
+                <circle cx="314" cy="228" r="10" fill="#f59e0b" />
+                <circle cx="356" cy="196" r="10" fill="#dc2626" />
+                <text x="182" y="108" class="map-label map-label--title">Nepal</text>
+                <text x="198" y="144" class="map-label">Chitwan</text>
+                <text x="262" y="154" class="map-label">Parsa</text>
+                <text x="218" y="266" class="map-label">Banke</text>
+                <text x="306" y="246" class="map-label">Bardiya</text>
+                <text x="352" y="214" class="map-label">Shuklaphanta</text>
+                <text x="112" y="300" class="map-note">Terai Arc Landscape</text>
+              </svg>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="section-title">
+              <p class="eyebrow">Global comparison</p>
+              <h2>World vs Nepal</h2>
+            </div>
+            <p>
+              Many tiger range countries have faced decline. Nepal is a stronger example of
+              recovery because of protected areas, habitat management, and active local support.
+            </p>
+            <div id="comparisonChart" class="comparison-chart"></div>
+            <div class="legend">
+              <div class="legend__item"><span class="legend__swatch legend__swatch--world"></span>World trend</div>
+              <div class="legend__item"><span class="legend__swatch legend__swatch--nepal"></span>Nepal trend</div>
+            </div>
+          </article>
+        </section>
+
+        <section class="card summary-card">
+          <div class="section-title">
+            <p class="eyebrow">Conclusion</p>
+            <h2>Why the result matters</h2>
+          </div>
+          <p>
+            Nepal’s progress shows that strong protection, better habitat management, and local
+            community support can produce measurable conservation gains. The findings are not a
+            guarantee of future success, but they are a strong and encouraging signal for policy
+            and conservation planning.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

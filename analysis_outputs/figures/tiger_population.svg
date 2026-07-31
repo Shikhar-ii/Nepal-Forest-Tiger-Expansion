@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420">
+<rect x="0" y="0" width="100%" height="100%" fill="white"/>
+<text x="360.0" y="25" text-anchor="middle" font-size="20" font-family="Arial" fill="#111">Nepal's Wild Tiger Population, 2000–2026</text>
+<line x1="70" y1="350" x2="690" y2="350" stroke="#111" stroke-width="1.2"/>
+<line x1="70" y1="50" x2="70" y2="350" stroke="#111" stroke-width="1.2"/>
+<line x1="70" y1="350.0" x2="690" y2="350.0" stroke="#e5e5e5" stroke-width="1"/>
+<text x="60" y="354.0" text-anchor="end" font-size="12" font-family="Arial" fill="#555">109</text>
+<line x1="70" y1="290.0" x2="690" y2="290.0" stroke="#e5e5e5" stroke-width="1"/>
+<text x="60" y="294.0" text-anchor="end" font-size="12" font-family="Arial" fill="#555">173</text>
+<line x1="70" y1="230.0" x2="690" y2="230.0" stroke="#e5e5e5" stroke-width="1"/>
+<text x="60" y="234.0" text-anchor="end" font-size="12" font-family="Arial" fill="#555">237</text>
+<line x1="70" y1="170.0" x2="690" y2="170.0" stroke="#e5e5e5" stroke-width="1"/>
+<text x="60" y="174.0" text-anchor="end" font-size="12" font-family="Arial" fill="#555">301</text>
+<line x1="70" y1="110.0" x2="690" y2="110.0" stroke="#e5e5e5" stroke-width="1"/>
+<text x="60" y="114.0" text-anchor="end" font-size="12" font-family="Arial" fill="#555">365</text>
+<line x1="70" y1="50.0" x2="690" y2="50.0" stroke="#e5e5e5" stroke-width="1"/>
+<text x="60" y="54.0" text-anchor="end" font-size="12" font-family="Arial" fill="#555">429</text>
+<circle cx="70.0" cy="350.0" r="5" fill="#1b7837"/>
+<text x="70.0" y="374" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">2000</text>
+<text x="70.0" y="338.0" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">109</text>
+<circle cx="189.23076923076923" cy="334.0625" r="5" fill="#1b7837"/>
+<text x="189.23076923076923" y="374" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">2005</text>
+<text x="189.23076923076923" y="322.0625" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">126</text>
+<circle cx="284.61538461538464" cy="338.75" r="5" fill="#1b7837"/>
+<text x="284.61538461538464" y="374" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">2009</text>
+<text x="284.61538461538464" y="326.75" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">121</text>
+<circle cx="380.0" cy="266.5625" r="5" fill="#1b7837"/>
+<text x="380.0" y="374" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">2013</text>
+<text x="380.0" y="254.5625" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">198</text>
+<circle cx="499.2307692307692" cy="231.875" r="5" fill="#1b7837"/>
+<text x="499.2307692307692" y="374" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">2018</text>
+<text x="499.2307692307692" y="219.875" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">235</text>
+<circle cx="594.6153846153846" cy="119.375" r="5" fill="#1b7837"/>
+<text x="594.6153846153846" y="374" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">2022</text>
+<text x="594.6153846153846" y="107.375" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">355</text>
+<circle cx="690.0" cy="50.0" r="5" fill="#1b7837"/>
+<text x="690.0" y="374" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">2026</text>
+<text x="690.0" y="38.0" text-anchor="middle" font-size="12" font-family="Arial" fill="#333">429</text>
+<polyline points="70.0,350.0 189.23076923076923,334.0625 284.61538461538464,338.75 380.0,266.5625 499.2307692307692,231.875 594.6153846153846,119.375 690.0,50.0" fill="none" stroke="#1b7837" stroke-width="3" />
+<text x="360.0" y="400" text-anchor="middle" font-size="13" font-family="Arial" fill="#555">Year</text>
+<text x="25" y="210.0" text-anchor="middle" transform="rotate(-90 25 210.0)" font-size="13" font-family="Arial" fill="#555">Tiger count</text>
+</svg>

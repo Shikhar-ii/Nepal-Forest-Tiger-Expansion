@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420">
+<rect x="0" y="0" width="100%" height="100%" fill="white"/>
+<text x="380.0" y="25" text-anchor="middle" font-size="20" font-family="Arial" fill="#111">Nepal: Tiger Population vs. Forest Cover, 2000–2026</text>
+<line x1="70" y1="350" x2="720" y2="350" stroke="#111" stroke-width="1.2"/>
+<line x1="70" y1="60" x2="70" y2="350" stroke="#111" stroke-width="1.2"/>
+<polyline points="70.0,350.0 95.0,339.125 120.0,327.34375 145.0,316.46875 170.0,305.59375 195.0,293.8125 220.0,282.9375 245.0,272.0625 270.0,261.1875 295.0,249.40625 320.0,238.53125 345.0,227.65625 370.0,215.875 395.0,205.0 420.0,194.125 444.99999999999994,182.34375 470.0,171.46875 495.0,160.59375 520.0,148.8125 545.0,137.9375 570.0,127.0625 595.0,116.1875 620.0,104.40625 645.0,93.53125 670.0,82.65625 695.0,70.875 720.0,60.0" fill="none" stroke="#1b7837" stroke-width="3"/>
+<polyline points="70.0,320.99999999999994 195.0,345.1666666666666 320.0,72.56666666666655 444.99999999999994,108.33333333333331 570.0,284.2666666666667" fill="none" stroke="#b2182b" stroke-width="2.5" stroke-dasharray="6 4"/>
+<text x="110" y="50" font-size="12" font-family="Arial" fill="#1b7837">Tiger count</text>
+<text x="620" y="50" font-size="12" font-family="Arial" fill="#b2182b">Forest cover %</text>
+</svg>

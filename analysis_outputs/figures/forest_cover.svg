@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420">
+<rect x="0" y="0" width="100%" height="100%" fill="white"/>
+<text x="360.0" y="25" text-anchor="middle" font-size="20" font-family="Arial" fill="#111">Nepal Forest Cover Estimates by Source, 1994–2021</text>
+<line x1="70" y1="350" x2="690" y2="350" stroke="#111" stroke-width="1.2"/>
+<line x1="70" y1="60" x2="70" y2="350" stroke="#111" stroke-width="1.2"/>
+<circle cx="70.0" cy="324.290780141844" r="7" fill="#2166ac" stroke="#111" stroke-width="1.2"/>
+<text x="70.0" y="312.290780141844" text-anchor="middle" font-size="11" fill="#333">39.60</text>
+<text x="70.0" y="374" text-anchor="middle" font-size="11" fill="#333">1994</text>
+<circle cx="437.4074074074074" cy="350.0" r="7" fill="#2166ac" stroke="#111" stroke-width="1.2"/>
+<text x="437.4074074074074" y="338.0" text-anchor="middle" font-size="11" fill="#333">39.10</text>
+<text x="437.4074074074074" y="374" text-anchor="middle" font-size="11" fill="#333">2010</text>
+<circle cx="483.3333333333333" cy="60.0" r="7" fill="#b2182b" stroke="#111" stroke-width="1.2"/>
+<text x="483.3333333333333" y="48.0" text-anchor="middle" font-size="11" fill="#333">44.74</text>
+<text x="483.3333333333333" y="374" text-anchor="middle" font-size="11" fill="#333">2012</text>
+<circle cx="667.037037037037" cy="98.04964539007102" r="7" fill="#1b7837" stroke="#111" stroke-width="1.2"/>
+<text x="667.037037037037" y="86.04964539007102" text-anchor="middle" font-size="11" fill="#333">44.00</text>
+<text x="667.037037037037" y="374" text-anchor="middle" font-size="11" fill="#333">2020</text>
+<circle cx="690.0" cy="285.2127659574469" r="7" fill="#2166ac" stroke="#111" stroke-width="1.2"/>
+<text x="690.0" y="273.2127659574469" text-anchor="middle" font-size="11" fill="#333">40.36</text>
+<text x="690.0" y="374" text-anchor="middle" font-size="11" fill="#333">2021</text>
+</svg>
