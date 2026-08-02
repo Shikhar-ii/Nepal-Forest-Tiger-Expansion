@@ -1,96 +1,283 @@
-# Nepal Tiger Recovery & Forest Cover — Research Story
+# Nepal Tiger Recovery and Forest Cover Dynamics (2000–2026)
 
-**Live site:** [nepal-forest-tiger-expansion.vercel.app](https://nepal-forest-tiger-expansion.vercel.app)
+> **An open, reproducible research project analyzing Nepal's tiger population recovery alongside long-term forest-cover trends through interactive visualization, geospatial analysis, and reproducible computational workflows.**
 
-A data-driven research project examining Nepal's wild tiger population recovery (2000–2026) alongside national forest-cover trends, presented as an interactive web story, a reproducible Jupyter notebook, a conference-style research paper, and a slide deck.
+**Live Research Story:** https://nepal-forest-tiger-expansion.vercel.app
 
-## Overview
+---
 
-Nepal's wild tiger population grew 3.5x from a 2009 baseline of 121 individuals to 429 in 2026, while independent national forest assessments place forest cover in a stable 39–45% range over the same period — a trend at odds with the deforestation seen across much of the tropics. This repository compiles publicly available census and remote-sensing data to document that trend, generates the supporting figures and maps from scratch in Python, and packages the findings for three audiences: a general web reader, a technical/reproducibility audience, and an academic one.
+## Abstract
 
-## Live Site
+Nepal represents one of the world's most significant wildlife conservation success stories. Between the first nationwide camera-trap census in 2009 and the 2026 national census, the country's wild tiger population increased from **121 to 429 individuals**, exceeding the international **Tx2** conservation target while many tropical regions continued experiencing biodiversity loss.
 
-The site at [nepal-forest-tiger-expansion.vercel.app](https://nepal-forest-tiger-expansion.vercel.app) presents the research story with:
+This project integrates publicly available wildlife census data, national forest inventories, satellite-derived forest-cover assessments, and geospatial habitat information into a fully reproducible research pipeline. The repository combines scientific analysis, interactive visualization, and academic reporting to examine how long-term forest stability coincides with one of the fastest documented tiger recoveries globally.
 
-- A hero section summarizing headline figures (3.5x population growth, 39–45% stable forest cover, Terai corridor context)
-- A combined tiger-population / forest-cover trend chart
-- A park-level tiger change comparison (2022 → 2026 census)
-- An OpenStreetMap-backed habitat map of the Terai Arc Landscape
+Rather than serving only as a visualization website, this repository provides an end-to-end reproducible research workflow, enabling readers to regenerate figures, inspect methodology, reproduce analyses, and explore the underlying datasets.
 
-Built with plain HTML/CSS/JS (`index.html`, `styles.css`, `script.js`), with all chart and map imagery generated from data rather than stock images or placeholders.
+---
 
-## Repository Structure
+# Research Contributions
+
+This project contributes:
+
+- A reproducible compilation of Nepal's national tiger census data spanning 2000–2026
+- Integration of independent national forest-cover assessments into a unified longitudinal dataset
+- Automated generation of publication-quality figures directly from source data
+- Geospatial visualization of protected habitats within Nepal's Terai Arc Landscape
+- An interactive research narrative designed to improve accessibility of conservation data
+- A conference-style research paper documenting methodology, analysis, findings, and limitations
+- A fully reproducible Jupyter notebook allowing independent verification of results
+
+---
+
+# Key Findings
+
+| Finding | Result |
+|----------|--------|
+| Tiger population growth | **121 → 429 (2009–2026)** |
+| Population increase | **3.5× growth** |
+| Tx2 Conservation Target | **Exceeded four years ahead of schedule** |
+| Forest-cover trend | **Stable (~39–45%) across national assessments** |
+| Protected areas increasing tiger populations | **4 of 5 major parks** |
+| Global significance | **Highest proportional tiger recovery among range countries** |
+
+---
+
+# Research Questions
+
+This project investigates:
+
+1. How has Nepal's tiger population changed over the past two decades?
+2. How has national forest cover changed during the same period?
+3. Can publicly available conservation datasets be integrated into a reproducible computational workflow?
+4. How can interactive visualization improve communication of ecological research?
+
+---
+
+# Repository Structure
 
 ```
-├── index.html                              # Web research story (deployed via Vercel)
-├── styles.css                              # Site styling
-├── script.js                               # Page interactions (particle/tilt effects) + image rendering
+.
+├── index.html
+├── styles.css
+├── script.js
+│
 ├── analysis_outputs/
-│   ├── export_analysis_outputs.py          # Regenerates all figures from repository CSV data
+│   ├── export_analysis_outputs.py
 │   └── figures/
-│       ├── tiger_forest_timeline.svg       # Combined tiger population / forest cover time series
-│       ├── park_change.svg                 # Park-level tiger change bar chart
-│       └── habitat_map.png                 # OpenStreetMap-based Terai habitat & park overview
-├── Nepal_Tigers_Forest_Cover_2000_2025.ipynb   # Reproducible analysis notebook
-├── Nepal_Tigers_Forest_Cover_Paper.docx        # Full research paper (LNCS-style formatting)
-├── Nepal_Tigers_Forest_Cover_Presentation.pptx # Slide deck summary
-├── LICENSE                                 # MIT
+│       ├── tiger_forest_timeline.svg
+│       ├── park_change.svg
+│       └── habitat_map.png
+│
+├── Nepal_Tigers_Forest_Cover_2000_2025.ipynb
+├── Nepal_Tigers_Forest_Cover_Paper.docx
+├── Nepal_Tigers_Forest_Cover_Presentation.pptx
+├── LICENSE
 └── README.md
 ```
 
-## Regenerating the Figures
+---
 
-The site's figures are not static assets — they're generated from the repository's underlying data using Python:
+# Components
+
+## 1. Interactive Research Story
+
+The deployed website presents the research through an interactive narrative featuring:
+
+- Executive summary of principal findings
+- Population and forest-cover time series
+- Park-level census comparisons
+- Interactive habitat mapping
+- Responsive visual storytelling
+- Data-driven graphics generated directly from source datasets
+
+---
+
+## 2. Reproducible Analysis
+
+The accompanying Jupyter notebook documents every analytical step, including:
+
+- Data preprocessing
+- Dataset integration
+- Statistical summaries
+- Figure generation
+- Correlation analysis
+- Source citations
+- Reproducible workflows
+
+All visualizations included in the website and paper originate from notebook-generated outputs.
+
+---
+
+## 3. Geospatial Analysis
+
+The project incorporates open geospatial datasets to visualize:
+
+- Protected areas
+- Major tiger habitats
+- Terai Arc Landscape
+- Habitat connectivity
+- OpenStreetMap basemap integration
+
+using:
+
+- GeoPandas
+- OSMnx
+- Contextily
+- Shapely
+
+---
+
+## 4. Research Paper
+
+The repository includes a conference-style research manuscript containing:
+
+- Introduction
+- Background
+- Literature review
+- Methodology
+- Results
+- Discussion
+- Limitations
+- References
+
+---
+
+## 5. Presentation
+
+A presentation deck summarizes the research for conference talks, classroom presentations, and outreach activities.
+
+---
+
+# Reproducing the Analysis
+
+Install dependencies
 
 ```bash
-python3 -m pip install pandas matplotlib geopandas osmnx contextily shapely
-python3 analysis_outputs/export_analysis_outputs.py
+pip install pandas matplotlib geopandas osmnx contextily shapely
 ```
 
-This reads the repository's CSV data and rewrites everything under `analysis_outputs/figures/`, including the OpenStreetMap-derived habitat map (via `osmnx`/`contextily`) and the two chart SVGs (via `matplotlib`). Re-run it after updating any source data, then refresh `index.html` in a browser to see the changes reflected.
+Generate all figures
 
-## Key Findings
+```bash
+python analysis_outputs/export_analysis_outputs.py
+```
 
-| Metric | Value |
-|---|---|
-| Tiger population growth (2009 → 2026) | 3.5x (121 → 429) |
-| Tx2 goal (double tigers by 2022) | Exceeded, four years ahead of schedule |
-| National forest cover range (1994–2021) | 39–45%, stable across independent assessments |
-| Parks gaining tigers (2022 → 2026) | 4 of 5 (Chitwan, Parsa, Banke, Shuklaphanta); Bardiya declined |
-| Global context | Nepal's growth rate outpaces every other tiger-range country in relative terms |
+The script automatically recreates:
 
-Full methodology, global comparisons, and discussion of the government programs (Terai Arc Landscape Program, community forestry, anti-poaching enforcement) behind this recovery are in the notebook and paper.
+- Tiger population timeline
+- Forest-cover timeline
+- Protected-area comparison chart
+- Habitat map
 
-## Other Deliverables
+from the repository's source datasets.
 
-- **`Nepal_Tigers_Forest_Cover_2000_2025.ipynb`** — the underlying data compilation, charts, and descriptive correlation analysis, with citations for every figure used.
-- **`Nepal_Tigers_Forest_Cover_Paper.docx`** — a full write-up (introduction, background, methods, results, discussion, references) situating Nepal's recovery in global tiger-conservation trends.
-- **`Nepal_Tigers_Forest_Cover_Presentation.pptx`** — a short slide deck version for presentations.
+---
 
-## Data Sources
+# Technologies
 
-- Department of National Parks and Wildlife Conservation (DNPWC), Nepal — National Tiger Census releases (2009–2026)
-- Global Forest Watch / Hansen Global Forest Change dataset (University of Maryland)
-- Department of Forest Research and Survey (DFRS) — Forest Resource Assessment 2010–2014
-- National Forest Inventory 2021, Government of Nepal
-- Global Tiger Forum / WWF range-country population estimates
-- OpenStreetMap (habitat map basemap)
+### Programming
 
-Full citations are listed in the notebook and paper.
+- Python
+- HTML
+- CSS
+- JavaScript
 
-## Limitations
+### Data Analysis
 
-- Forest-cover figures come from methodologically distinct assessments (aerial inventory, Landsat, RapidEye) and are not a single continuous time series.
-- Pre-2009 tiger figures are pre-camera-trap estimates, not directly comparable to later systematic censuses.
-- Correlations shown between tiger population and forest cover are descriptive, not causal.
+- Pandas
+- NumPy
+- Matplotlib
 
-## Acknowledgments
+### Geospatial
 
-Developed as part of the **ESIIL**, University of Colorado Boulder, supported by the **U.S. National Science Foundation (NSF)**.
+- GeoPandas
+- OSMnx
+- Contextily
+- Shapely
 
-**Author:** Shikhar Pandey
-**Mentor:** Nate Quarderer, ESIIL Education Director
+### Visualization
 
-## License
+- SVG
+- Interactive Web Components
+- Responsive Design
 
-MIT — see [`LICENSE`](./LICENSE).
+---
+
+# Data Sources
+
+The analysis synthesizes publicly available information from:
+
+- Department of National Parks and Wildlife Conservation (DNPWC)
+- Department of Forest Research and Survey (DFRS)
+- National Forest Inventory (Government of Nepal)
+- Global Forest Watch
+- Hansen Global Forest Change Dataset (University of Maryland)
+- WWF
+- Global Tiger Forum
+- OpenStreetMap
+
+Complete citations are available in the notebook and research paper.
+
+---
+
+# Methodological Notes
+
+The project prioritizes transparency and reproducibility.
+
+Key considerations include:
+
+- Forest-cover estimates originate from independent national assessments using different remote-sensing methodologies.
+- Tiger estimates prior to the adoption of nationwide camera-trap surveys are not directly comparable with later census data.
+- Reported relationships between forest cover and tiger populations are descriptive and should not be interpreted as causal.
+
+---
+
+# Research Impact
+
+This project demonstrates how open ecological datasets can be transformed into reproducible scientific products that serve multiple audiences simultaneously:
+
+- Researchers seeking transparent workflows
+- Conservation practitioners
+- Policy makers
+- Students
+- General public
+
+By integrating computational analysis, geospatial visualization, scientific writing, and interactive storytelling, the repository illustrates a reproducible approach for communicating conservation science.
+
+---
+
+# Acknowledgments
+
+Developed during the **Environmental Data Science Innovation & Inclusion Lab (ESIIL)** at the **University of Colorado Boulder**.
+
+Supported by the **U.S. National Science Foundation (NSF).**
+
+**Author**
+
+**Shikhar Pandey**
+
+**Mentor**
+
+**Nate Quarderer**  
+Education Director, ESIIL
+
+---
+
+# Citation
+
+If you use this repository, figures, or analysis in academic work, please cite:
+
+```
+Pandey, S. (2026).
+Nepal Tiger Recovery and Forest Cover Dynamics (2000–2026):
+A Reproducible Computational Analysis.
+GitHub Repository.
+ESIIL & NSF FUNDED
+```
+
+---
+
+# License
+
+This project is released under the **MIT License**.
