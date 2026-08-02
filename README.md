@@ -249,7 +249,7 @@ By integrating computational analysis, geospatial visualization, scientific writ
 
 # Acknowledgments
 
-Developed during the **Environmental Data Science Innovation & Inclusion Lab (ESIIL)** at the **University of Colorado Boulder**.
+Developed during the **(ESIIL)** at the **University of Colorado Boulder**.
 
 Supported by the **U.S. National Science Foundation (NSF).**
 
